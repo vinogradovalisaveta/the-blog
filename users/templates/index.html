@@ -13,6 +13,9 @@
     <a href="{% url 'profile' user.pk %}">
         <p>{{ user.username }}</p>
     </a>
+<a href="{% url 'posts:new_post' %}">
+    <h1>add new post</h1>
+</a>
 <a href="{% url 'logout' %}">
     <p>logout</p>
 </a>
