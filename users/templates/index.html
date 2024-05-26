@@ -13,6 +13,12 @@
     <a href="{% url 'profile' user.pk %}">
         <p>{{ user.username }}</p>
     </a>
+<a href="{% url 'logout' %}">
+    <p>logout</p>
+</a>
     {% endif %}
+<a href="{% url 'login' %}">
+    <h1>login</h1>
+</a>
 </body>
 </html>
