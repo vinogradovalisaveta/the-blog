@@ -2,7 +2,9 @@
 
 {% block content %}
 {% for post in object_list %}
-<h1>{{ post.title }}</h1>
-<p>{{ post.text }}</p>
+<a href="{% url 'post' post.pk %}">
+    <h1>{{ post.title }}</h1>
+</a>
+<p>{{ post.text|truncatewords:30 }}</p>
 {% endfor %}
 {% endblock %}

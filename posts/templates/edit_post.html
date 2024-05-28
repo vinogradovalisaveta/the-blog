@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="{% url 'index' %}">
+    <button>back</button>
+</a>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="save">
+</form>
+<a href="{% url 'delete' post.pk %}">
+        <button>delete</button>
+    </a>
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, AuthenticationForm
@@ -30,10 +30,6 @@ class UserProfile(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('profile', args=[self.request.user.pk])
-
-
-def index(request):
-    return render(request, 'index.html', {})
 
 
 class UserRegisterView(CreateView):

@@ -4,4 +4,9 @@
 <h1>{{ post.title }}</h1>
 <p>{{ post.text }}</p>
 <h4>published {{ post.created_at }} by {{ post.author }}</h4>
+{% if user.is_authenticated %}
+<a href="{% url 'edit' post.pk %}">
+    <button>edit post</button>
+</a>
+{% endif %}
 {% endblock %}

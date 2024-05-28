@@ -34,12 +34,12 @@
                         </ul>
                     </li>
                 {% if user.is_authenticated %}
-                <li><a href="#" title="">{{ user.username }}</a></li>
-                <li><a href="{% url 'logout' %}" title="">Logout</a></li>
-                <li><a href="{% url 'posts:new_post' %}" title="">Add new post</a></li>
+                <li><a href="{% url 'users:profile' user.pk %}" title="">{{ user.username }}</a></li>
+                <li><a href="{% url 'users:logout' %}" title="">Logout</a></li>
+                <li><a href="{% url 'new_post' %}" title="">Add new post</a></li>
                 {% else %}
-                <li><a href="{% url 'login' %}" title="">Login</a></li>
-                <li><a href="{% url 'signup' %}" title="">Signup</a></li>
+                <li><a href="{% url 'users:login' %}" title="">Login</a></li>
+                <li><a href="{% url 'users:signup' %}" title="">Signup</a></li>
                 {% endif %}
                 <li><a href="contact.html" title="">Contact</a></li>
                 </ul>

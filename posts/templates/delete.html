@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>are you sure you want to delete {{ post.title|truncatewords:3 }} post?</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="yes">
+</form>
+<a href="{% url 'post' post.pk %}">
+    <button>cancel</button>
+</a>
+{% endblock %}
