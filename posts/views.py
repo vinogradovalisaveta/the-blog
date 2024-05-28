@@ -12,7 +12,7 @@ class DeletePostView(LoginRequiredMixin, DeleteView):
 
 class EditPostView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'image']
     template_name = 'edit_post.html'
 
     def get_success_url(self):
@@ -27,7 +27,7 @@ class PostDetail(DetailView):
 class NewPost(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'new_post.html'
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'image']
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -38,6 +38,7 @@ class NewPost(LoginRequiredMixin, CreateView):
 class PostListView(ListView):
     model = Post
     template_name = 'index.html'
+    paginate_by = 1
 
     def get_queryset(self):
         return Post.objects.order_by('-created_at')

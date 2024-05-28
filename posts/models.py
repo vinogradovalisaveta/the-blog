@@ -7,6 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=150)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='images', blank=True, null=True)
 
     def get_absolute_url(self):
         return f'post/{self.pk}'
