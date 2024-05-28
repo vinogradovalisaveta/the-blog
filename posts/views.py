@@ -18,8 +18,10 @@ class NewPost(CreateView):
         return super().form_valid(form)
 
 
-class PostList(ListView):
+class PostListView(ListView):
     model = Post
-    template_name = 'users/templates/index.html'
+    template_name = 'index.html'
 
+    def get_queryset(self):
+        return Post.objects.order_by('-created_at')
 

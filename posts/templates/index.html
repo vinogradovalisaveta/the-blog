@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% for post in object_list %}
 <h1>{{ post.title }}</h1>
 <p>{{ post.text }}</p>
-<h4>published {{ post.created_at }} by {{ post.author }}</h4>
+{% endfor %}
 {% endblock %}
