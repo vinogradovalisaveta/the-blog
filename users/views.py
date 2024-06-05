@@ -1,10 +1,10 @@
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView
 from users.forms import UserRegisterForm, ProfileEditForm
 from users.models import Profile, User
 
@@ -51,13 +51,3 @@ def register(request):
         form = UserRegisterForm()
 
     return render(request, 'signup.html', {'form': form})
-
-
-# class UserRegisterView(CreateView):
-#     form_class = UserRegisterForm
-#     template_name = 'signup.html'
-#
-#     def form_valid(self, form):
-#         user = form.save()
-#         profile = Profile.objects.create(user=user)
-#         return redirect('index')
