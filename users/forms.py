@@ -9,8 +9,8 @@ from users.models import Profile
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput)
     email = forms.EmailField(widget=forms.EmailInput)
-    password1 = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
+    password1 = forms.CharField(widget=forms.PasswordInput, label='your password')
+    password2 = forms.CharField(widget=forms.PasswordInput, label='repeat your password')
 
     class Meta:
         model = get_user_model()

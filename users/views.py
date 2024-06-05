@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from users.forms import UserRegisterForm, ProfileEditForm
-from users.models import Profile
+from users.models import Profile, User
 
 
 @login_required
@@ -24,7 +24,7 @@ class UserLogin(LoginView):
 
 
 class UserProfile(LoginRequiredMixin, UpdateView):
-    model = Profile
+    model = User
     form_class = ProfileEditForm
     template_name = 'profile.html'
 
@@ -32,11 +32,25 @@ class UserProfile(LoginRequiredMixin, UpdateView):
         return reverse_lazy('profile', args=[self.request.user.pk])
 
 
-class UserRegisterView(CreateView):
-    form_class = UserRegisterForm
-    template_name = 'signup.html'
+def register(request):
+    form = UserRegisterForm
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserRegisterForm()
 
-    def form_valid(self, form):
-        user = form.save()
-        profile = Profile.objects.create(user=user)
-        return redirect('index')
+    return render(request, 'signup.html', {'form': form})
+
+
+# class UserRegisterView(CreateView):
+#     form_class = UserRegisterForm
+#     template_name = 'signup.html'
+#
+#     def form_valid(self, form):
+#         user = form.save()
+#         profile = Profile.objects.create(user=user)
+#         return redirect('index')
