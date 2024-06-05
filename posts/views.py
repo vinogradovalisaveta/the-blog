@@ -38,7 +38,7 @@ class NewPost(LoginRequiredMixin, CreateView):
 class PostListView(ListView):
     model = Post
     template_name = 'index.html'
-    paginate_by = 1
+    paginate_by = 10
 
     def get_queryset(self):
         return Post.objects.order_by('-created_at')
