@@ -24,12 +24,12 @@ class UserLogin(LoginView):
 
 
 class UserProfile(LoginRequiredMixin, UpdateView):
-    model = User
+    model = Profile
     form_class = ProfileEditForm
     template_name = 'profile.html'
 
     def get_success_url(self):
-        return reverse_lazy('profile', args=[self.request.user.pk])
+        return reverse_lazy('users:profile', kwargs={'pk': self.object.pk})
 
 
 def register(request):
@@ -38,6 +38,7 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+            profile = Profile.objects.create(user=user, email=user.email)
             login(request, user)
             return redirect('index')
     else:

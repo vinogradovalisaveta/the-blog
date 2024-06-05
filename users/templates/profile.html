@@ -2,9 +2,9 @@
 
 {% block content %}
 <img src="{{ user.image.url }}" alt="">
-<form method="post">
+<form action="" method="post">
     {% csrf_token %}
     {{ form }}
-    <button type="submit">save</button>
+    <input type="submit" value="save">
 </form>
 {% endblock %}
