@@ -4,9 +4,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from users.forms import UserRegisterForm, ProfileEditForm
 from users.models import Profile, User
+
+
+class DeleteProfile(LoginRequiredMixin, DeleteView):
+    model = User
+    template_name = 'delete_profile.html'
+    success_url = reverse_lazy('index')
 
 
 @login_required
