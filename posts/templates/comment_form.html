@@ -1,0 +1,8 @@
+<h3>Add Comment</h3>
+<form name="contactForm" id="contactForm" method="post" action="{% url 'add_comment' post.pk %}" autocomplete="off">
+    <fieldset>
+        {{ form }}
+        {% csrf_token %}
+        <input name="submit" id="submit" class="btn btn--primary btn-wide btn--large h-full-width" value="Add Comment" type="submit">
+    </fieldset>
+</form>

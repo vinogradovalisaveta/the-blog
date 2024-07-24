@@ -13,4 +13,11 @@
     <button>edit post</button>
 </a>
 {% endif %}
+{% for comment in comments %}
+<div>
+<p> comment {{ forloop.counter }} by {{ comment.author }} {{ comment.created }}</p>
+{{ comment.text|linebreaks }}
+    </div>
+{% endfor %}
+{% include 'comment_form.html' %}
 {% endblock %}
