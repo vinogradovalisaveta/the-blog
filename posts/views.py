@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from posts.models import Post, Comment
 from posts.forms import CommentForm
+from django.core.paginator import Paginator
 
 
 @login_required

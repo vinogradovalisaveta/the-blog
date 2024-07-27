@@ -15,7 +15,7 @@
 </a>
 {% endif %}
 {% if post.likes.count > 1 %}
-<p>{{ post.likes.first }} and {{ post.likes.count-1 }} others like your post</p>
+<p>{{ post.likes.first }} and {{ post.likes.count|add:-1 }} others like your post</p>
 {% elif post.likes.count == 1 %}
 <p>{{ post.likes.first }} likes your post</p>
 {% else %}
