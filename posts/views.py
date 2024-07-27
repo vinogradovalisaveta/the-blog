@@ -9,6 +9,16 @@ from posts.forms import CommentForm
 
 
 @login_required
+def like_post(request, pk):
+    post = Post.objects.get(pk=pk)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect('post', pk=pk)
+
+
+@login_required
 @require_POST
 def add_comment(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -71,7 +81,4 @@ class PostListView(ListView):
     model = Post
     template_name = 'index.html'
     paginate_by = 10
-
-    def get_queryset(self):
-        return Post.objects.order_by('-created_at')
 
