@@ -13,6 +13,8 @@
                             <div class="comment__author">{{ comment.author }}</div>
                             <div class="comment__meta">
                                 <div class="comment__time">{{ comment.created_at }}</div>
+                                <a href="{% url 'like_comment' comment.pk %}">{% if user in comment.likes.all %}unlike{% else %}like{% endif %}</a>
+                                <h6>{% if comment.likes.count == 1 %}1 like{% else %}{{ comment.likes.count }} likes{% endif %}</h6>
                                 <div class="comment__reply">
                                     <a class="comment-reply-link" href="#0">Reply</a>
                                 </div>

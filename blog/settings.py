@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'users',
     'posts',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,10 @@ WSGI_APPLICATION = "blog.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "blog",
+        "USER": "lisaveta",
+        "PASSWORD": "lisaveta",
     }
 }
 

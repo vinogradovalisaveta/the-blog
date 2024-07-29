@@ -6,7 +6,54 @@ from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from posts.models import Post, Comment
 from posts.forms import CommentForm
-from django.core.paginator import Paginator
+from django.db.models import Q
+from django.utils.html import mark_safe
+
+
+class SearchView(ListView):
+    model = Post
+    template_name = 'search.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Post.objects.filter(
+                Q(title__icontains=query) | Q(text__icontains=query)
+            )
+        else:
+            return Post.objects.none()
+
+
+
+
+
+
+# def search(request):
+#     form = SearchForm()
+#     query = None
+#     results = []
+#
+#     if 'query' in request.GET:
+#         form = SearchForm(request.GET)
+#         if form.is_valid():
+#             query = form.cleaned_data['query']
+#             results = Post.objects.annotate(
+#                 search=SearchVector('title', 'text'),
+#             ).filter(search=query)
+#
+#     return render(request, 'search.html', {'query': query,
+#                   'results': results})
+
+
+@login_required
+def like_comment(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    post = comment.post.pk
+    if request.user in comment.likes.all():
+        comment.likes.remove(request.user)
+    else:
+        comment.likes.add(request.user)
+    return redirect('post', pk=post)
 
 
 @login_required
@@ -82,4 +129,3 @@ class PostListView(ListView):
     model = Post
     template_name = 'index.html'
     paginate_by = 10
-
