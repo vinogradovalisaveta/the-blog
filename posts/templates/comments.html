@@ -10,7 +10,7 @@
                     </div>
                     <div class="comment__content">
                         <div class="comment__info">
-                            <div class="comment__author">{{ comment.author }}</div>
+                            <div class="comment__author"><a href="{% url 'users:profile' comment.author.pk %}">{{ comment.author }}</a></div>
                             <div class="comment__meta">
                                 <div class="comment__time">{{ comment.created_at }}</div>
                                 <a href="{% url 'like_comment' comment.pk %}">{% if user in comment.likes.all %}unlike{% else %}like{% endif %}</a>

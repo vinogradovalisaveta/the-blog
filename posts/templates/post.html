@@ -7,7 +7,7 @@
 <img src="{{ post.image.url }}" alt="">
 {% endif %}
 <p>{{ post.text }}</p>
-<h4>published {{ post.created_at }} by {{ post.author }}</h4>
+<h4>published {{ post.created_at }} by <a href="{% url 'users:profile' post.author.pk %}">{{ post.author }}</a></h4>
 {% if user.is_authenticated %}
 <a href="{% url 'like_post' post.pk %}">{% if user in post.likes.all %}unlike{% else %}like{% endif %}</a>
 {% if post.author == user %}<a href="{% url 'edit' post.pk %}">
