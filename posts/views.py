@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
@@ -22,27 +22,6 @@ class SearchView(ListView):
             )
         else:
             return Post.objects.none()
-
-
-
-
-
-
-# def search(request):
-#     form = SearchForm()
-#     query = None
-#     results = []
-#
-#     if 'query' in request.GET:
-#         form = SearchForm(request.GET)
-#         if form.is_valid():
-#             query = form.cleaned_data['query']
-#             results = Post.objects.annotate(
-#                 search=SearchVector('title', 'text'),
-#             ).filter(search=query)
-#
-#     return render(request, 'search.html', {'query': query,
-#                   'results': results})
 
 
 @login_required
@@ -83,16 +62,32 @@ def add_comment(request, pk):
                    'form': form})
 
 
-class DeletePostView(LoginRequiredMixin, DeleteView):
+class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'delete.html'
     success_url = reverse_lazy('index')
 
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
 
-class EditPostView(LoginRequiredMixin, UpdateView):
+
+class EditPostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['title', 'text', 'image']
     template_name = 'edit_post.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
 
     def get_success_url(self):
         return reverse_lazy('post', kwargs={'pk': self.object.pk})

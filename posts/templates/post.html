@@ -10,9 +10,9 @@
 <h4>published {{ post.created_at }} by {{ post.author }}</h4>
 {% if user.is_authenticated %}
 <a href="{% url 'like_post' post.pk %}">{% if user in post.likes.all %}unlike{% else %}like{% endif %}</a>
-<a href="{% url 'edit' post.pk %}">
+{% if post.author == user %}<a href="{% url 'edit' post.pk %}">
     <button>edit post</button>
-</a>
+</a>{% endif %}
 {% endif %}
 {% if post.likes.count > 1 %}
 <p>{{ post.likes.first }} and {{ post.likes.count|add:-1 }} others like your post</p>
