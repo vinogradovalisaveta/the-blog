@@ -4,9 +4,22 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView, DetailView
 from users.forms import UserRegisterForm, ProfileEditForm
 from users.models import Profile, User
+from posts.models import Post
+
+
+class UserProfileDetail(DetailView):
+    model = User
+    template_name = 'profile_detail.html'
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.object
+        context['posts'] = Post.objects.filter(author=user).order_by('-created_at')
+        return context
 
 
 class DeleteProfile(LoginRequiredMixin, DeleteView):

@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    command: python /the-blog/manage.py runserver 127.0.0.1:8000
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/the-blog
+    environment:
+      - DEBUG=True
+
+  db:
+    image: postgres:14.5-alpine
+    volumes:
+
